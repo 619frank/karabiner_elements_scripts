@@ -1,0 +1,43 @@
+{
+    "available_since": "12.3.0",
+    "description": "Hold right-click for 200ms to enable drag-to-scroll",
+    "manipulators": [
+        {
+            "from": {
+                "pointing_button": "button2",
+                "modifiers": { "optional": ["any"] }
+            },
+            "parameters": {
+                "basic.to_if_alone_timeout_milliseconds": 200
+            },
+            "to": [
+                {
+                    "set_variable": {
+                        "name": "enable_mouse_motion_to_scroll",
+                        "value": 1
+                    }
+                }
+            ],
+            "to_after_key_up": [
+                {
+                    "set_variable": {
+                        "name": "enable_mouse_motion_to_scroll",
+                        "value": 0
+                    }
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "conditions": [
+                {
+                    "name": "enable_mouse_motion_to_scroll",
+                    "type": "variable_if",
+                    "value": 1
+                }
+            ],
+            "from": { "modifiers": { "optional": ["any"] } },
+            "type": "mouse_motion_to_scroll"
+        }
+    ]
+}
