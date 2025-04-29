@@ -1,15 +1,19 @@
 {
-    "description": "Middle button + Left click -> Cmd+C, Middle button + Right click -> Cmd+V",
+    "description": "Middle click hold > 200ms: with left click -> Cmd+C, with right click -> Cmd+V; < 200ms -> middle click",
     "manipulators": [
         {
             "from": {
                 "modifiers": { "optional": ["any"] },
                 "pointing_button": "button3"
             },
+            "parameters": {
+                "basic.to_if_alone_timeout_milliseconds": 200,
+                "basic.to_if_held_down_threshold_milliseconds": 200
+            },
             "to": [
                 {
                     "set_variable": {
-                        "name": "middle_button_held",
+                        "name": "middle_click_held",
                         "value": 1
                     }
                 }
@@ -17,8 +21,17 @@
             "to_after_key_up": [
                 {
                     "set_variable": {
-                        "name": "middle_button_held",
+                        "name": "middle_click_held",
                         "value": 0
+                    }
+                }
+            ],
+            "to_if_alone": [{ "pointing_button": "button3" }],
+            "to_if_held_down": [
+                {
+                    "set_variable": {
+                        "name": "middle_click_held",
+                        "value": 1
                     }
                 }
             ],
@@ -27,7 +40,7 @@
         {
             "conditions": [
                 {
-                    "name": "middle_button_held",
+                    "name": "middle_click_held",
                     "type": "variable_if",
                     "value": 1
                 }
@@ -47,7 +60,7 @@
         {
             "conditions": [
                 {
-                    "name": "middle_button_held",
+                    "name": "middle_click_held",
                     "type": "variable_if",
                     "value": 1
                 }
